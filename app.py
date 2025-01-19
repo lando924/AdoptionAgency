@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, Pet
 
-from forms import AddPetForm
+from forms import AddPetForm, EditPetForm
 
 app = Flask(__name__)
 app.debug = True
@@ -50,3 +50,19 @@ def add_pet():
         return redirect("/")
     else:
         return render_template('add_pet.html', form=form)
+    
+@app.route("/<int:petid>", methods=["GET", "POST"])
+def pet_details(petid):
+    """Show information and edit Pet"""
+    pet = Pet.query.get_or_404(petid)
+    form = EditPetForm(obj=pet)
+
+    if form.validate_on_submit():
+        pet.photo_url = form.photo_url.data
+        pet.notes = form.notes.data
+        pet.available = form.available.data
+        db.session.commit()
+        flash(f"{pet.name}'s profile was updated!")
+        return redirect("/")
+    else:
+        return render_template('pet_info.html', pet=pet, form=form)

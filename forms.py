@@ -15,3 +15,9 @@ class AddPetForm(FlaskForm):
     notes = StringField('Additional Notes:')
     available = BooleanField("Available")
 
+class EditPetForm(FlaskForm):
+    """Edit Pet Form"""
+
+    photo_url = StringField("Photo of Pet Link")
+    notes = StringField("Additional Notes:")
+    available = BooleanField("Available")
