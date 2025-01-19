@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+{% for msg in get_flashed_messages() %}
+<li> {{ msg }}</li>
+{% endfor %}
+
+<h1 class="display-1 text-center">Pets</h1>
+
+<div class="row justify-content-center">
+    <table class="table table-striped mt-5">
+        <thead>
+            <tr>
+                <th>Pet Name</th>
+                <th>Photo</th>
+                <th>Available</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for pet in pets %}
+        <tr>
+            <td>{{ pet.name }}</td>
+            <td>
+                {% if pet.photo_url %}
+                    <img src="{{ pet.photo_url }}" alt="{{ pet.name }}" style="max-width: 100px;">
+                {% endif %}
+            </td>
+            <td>
+                {% if pet.available %}
+                    <b>Available</b>
+                {% else %}
+                    Not Available
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

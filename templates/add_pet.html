@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h2 id="text">Add your pet to the list:</h2>
+
+<div class="container col-md-8">
+    {{ form }}
+        <form id="add-pet-form", method="POST">
+            {{ form.hidden_tag() }}
+            {% for field in form 
+                if field.widget.input_type != 'hidden' %}
+            <p>
+                {{ field.label }}
+                {{ field(class_="form-control") }}
+
+            </p>
+            {% endfor %}
+            <button class="btn btn-success"><a href="/">Submit</a></button>
+        </form>
+</div>
+{% endblock %}
+
